@@ -1,0 +1,22 @@
+const { Category } = require("../model/Category");
+
+const fetchCategories = async (req, res) => {
+  try {
+    const categories = await Category.find({}).exec();
+    res.status(200).json(categories);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+};
+
+async function createCategory(req, res) {
+  const category = new Category(req.body);
+  try {
+    const doc = await category.save();
+    res.status(200).json(doc);
+  } catch (error) {
+    res.status(400).json(error);
+  }
+}
+
+module.exports = { fetchCategories, createCategory };
